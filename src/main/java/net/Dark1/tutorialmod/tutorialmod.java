@@ -1,6 +1,9 @@
 package net.Dark1.tutorialmod;
 
 import com.mojang.logging.LogUtils;
+import net.Dark1.tutorialmod.item.moditems;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -11,6 +14,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+
+import javax.naming.directory.ModificationItem;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(tutorialmod.MOD_ID)
@@ -23,6 +28,11 @@ public class tutorialmod
     public tutorialmod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        // adding Black Opal Item
+        moditems.register(modEventBus);
+
+
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -41,6 +51,10 @@ public class tutorialmod
 
     private void addCreative(CreativeModeTabEvent.BuildContents event)
     {
+        //Putting Black Opal into Creative menu
+        if (event.getTab() == CreativeModeTabs.INGREDIENTS){
+            event.accept(moditems.BLACK_OPAL);
+        }
 
     }
 
